@@ -93,6 +93,8 @@ export default async function globalSetup() {
     DATABASE_URL: databaseUrl,
     DIRECT_URL: databaseUrl,
     JWT_SECRET: 'e2e-secret',
+    // Os e-mails dos testes são fictícios; a checagem de DNS tem testes próprios na API
+    EMAIL_DOMAIN_CHECK: 'off',
     PORT: String(API_PORT),
     CORS_ORIGIN: BASE_URL,
     API_URL: `http://localhost:${API_PORT}`,

@@ -8,7 +8,7 @@ const HERE = { latitude: -25.4284, longitude: -49.2733 }
 const item = (page: Page, quantity: string) =>
   page.getByRole('listitem').filter({ hasText: quantity })
 
-test.describe('Lista de ocorrências próximas', () => {
+test.describe('Coletar: ocorrências por distância', () => {
   test('ordena da mais próxima para a mais distante, com a distância', async ({
     page,
     request,
@@ -31,8 +31,8 @@ test.describe('Lista de ocorrências próximas', () => {
 
     await page.goto('/')
     await page.getByRole('link', { name: 'Explorar mapa' }).click()
-    await navLink(page, 'Lista').click()
-    await expect(page.getByRole('heading', { name: 'Ocorrências próximas' })).toBeVisible()
+    await navLink(page, 'Coletar').click()
+    await expect(page.getByRole('heading', { name: 'Coletar', exact: true })).toBeVisible()
     await expect(page.getByText('da mais próxima para a mais distante')).toBeVisible()
 
     // Só as três deste teste, na ordem em que aparecem na tela
@@ -53,7 +53,7 @@ test.describe('Lista de ocorrências próximas', () => {
     await occurrenceAction(request, collector, claimed.id, 'claim')
     await occurrenceAction(request, owner, cancelled.id, 'cancel')
 
-    await page.goto('/lista')
+    await page.goto('/coletar')
 
     await expect(item(page, available.quantity)).toBeVisible()
     await expect(item(page, claimed.quantity)).toHaveCount(0)
@@ -67,7 +67,7 @@ test.describe('Lista de ocorrências próximas', () => {
     acceptDialogs(page)
     await signIn(page, collector)
 
-    await page.goto('/lista')
+    await page.goto('/coletar')
     const card = item(page, occurrence.quantity)
     await expect(card).toContainText('Doação')
     await card.getByRole('button', { name: 'Coletar' }).click()
@@ -78,8 +78,8 @@ test.describe('Lista de ocorrências próximas', () => {
     )
 
     // Ela sai da lista para todos
-    await navLink(page, 'Lista').click()
-    await expect(page.getByRole('heading', { name: 'Ocorrências próximas' })).toBeVisible()
+    await navLink(page, 'Coletar').click()
+    await expect(page.getByRole('heading', { name: 'Coletar', exact: true })).toBeVisible()
     await expect(item(page, occurrence.quantity)).toHaveCount(0)
   })
 
@@ -88,7 +88,7 @@ test.describe('Lista de ocorrências próximas', () => {
     const occurrence = await createOccurrence(request, owner)
     await signIn(page, owner)
 
-    await page.goto('/lista')
+    await page.goto('/coletar')
     const card = item(page, occurrence.quantity)
 
     await expect(card).toContainText('Sua ocorrência')
@@ -103,13 +103,13 @@ test.describe('Lista de ocorrências próximas', () => {
     const visitor = await createUser(request)
     const occurrence = await createOccurrence(request, owner)
 
-    await page.goto('/lista')
+    await page.goto('/coletar')
     await item(page, occurrence.quantity).getByRole('link', { name: 'Entrar para coletar' }).click()
     await page.getByLabel('E-mail').fill(visitor.email)
     await page.getByLabel('Senha').fill(visitor.password)
     await page.getByRole('button', { name: 'Entrar' }).click()
 
-    await expect(page).toHaveURL(/\/lista$/)
+    await expect(page).toHaveURL(/\/coletar$/)
     await expect(
       item(page, occurrence.quantity).getByRole('button', { name: 'Coletar' }),
     ).toBeVisible()
@@ -123,7 +123,7 @@ test.describe('Lista de ocorrências próximas', () => {
     acceptDialogs(page)
     await signIn(page, slow)
 
-    await page.goto('/lista')
+    await page.goto('/coletar')
     const card = item(page, occurrence.quantity)
     await expect(card).toBeVisible()
 
@@ -135,6 +135,13 @@ test.describe('Lista de ocorrências próximas', () => {
       'Esta ocorrência não está mais disponível para coleta',
     )
     await expect(card).toHaveCount(0)
-    await expect(page).toHaveURL(/\/lista$/)
+    await expect(page).toHaveURL(/\/coletar$/)
   })
+})
+
+test('o endereço antigo /lista leva para /coletar', async ({ page }) => {
+  await page.goto('/lista')
+
+  await expect(page).toHaveURL(/\/coletar$/)
+  await expect(page.getByRole('heading', { name: 'Coletar', exact: true })).toBeVisible()
 })

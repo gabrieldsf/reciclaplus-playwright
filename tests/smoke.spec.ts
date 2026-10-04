@@ -5,5 +5,5 @@ test('a pilha isolada está no ar (front → API → banco)', async ({ page, req
   expect(await health.json()).toEqual({ status: 'ok', database: 'ok' })
 
   await page.goto('/')
-  await expect(page.getByRole('heading', { name: /Encontre\. Compartilhe\./ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: /Encontre, compartilhe e recicle/ })).toBeVisible()
 })

@@ -13,7 +13,7 @@ test.describe('Responsividade', () => {
       '/cadastro',
       '/mapa',
       '/painel',
-      '/lista',
+      '/coletar',
       '/informar',
       '/historico',
       '/perfil',
@@ -54,10 +54,10 @@ test.describe('Responsividade', () => {
       await expect(header).toBeVisible()
       await expect(bottomBar).toBeHidden()
     }
-    // Ordem: "Lista" logo ao lado de "Informar"
+    // Ordem: "Coletar" logo ao lado de "Informar"
     await expect(
       page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link'),
-    ).toHaveText([/Mapa/, /Painel/, /Informar/, /Lista/, /Histórico/])
+    ).toHaveText([/Mapa/, /Painel/, /Informar/, /Coletar/, /Histórico/])
 
     // Perfil fica no canto superior direito, em qualquer tamanho de tela
     const profile = page.getByRole('banner').getByRole('link', { name: 'Perfil' })

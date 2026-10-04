@@ -50,6 +50,8 @@ npm run report             # relatório HTML da última execução
 | `acessibilidade.spec.ts`   | axe-core (WCAG 2.1 A/AA) em todas as telas, inclusive formulário com erros                                                                                                             |
 | `painel.spec.ts`           | números da tela = resposta da API, tabela equivalente a cada gráfico, dica via teclado                                                                                                 |
 | `falhas.spec.ts`           | API fora do ar (mapa, login), erro 500, ocorrência inexistente, sessão inválida                                                                                                        |
+| `coletar.spec.ts`          | tela Coletar: ordenação por distância, só disponíveis, coletar pela lista, própria ocorrência, visitante, conflito, /lista → /coletar                                                  |
+| `perfil.spec.ts`           | avatar de reciclagem, envio de foto (redimensionada no navegador), remover, arquivo inválido, sugestão de e-mail no cadastro                                                           |
 
 ## Problemas encontrados pelos testes
 
