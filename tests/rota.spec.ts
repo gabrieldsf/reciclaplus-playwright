@@ -1,4 +1,4 @@
-// Rota do coletor: bolinhas até o material, come-come e atalhos para o GPS.
+// Rota do coletor: bolinhas até o material, avatar do coletor e atalhos para o GPS.
 // No E2E não há chave do serviço de rotas, então a trilha é em linha reta (fallback).
 import { expect, test } from '@playwright/test'
 import { createOccurrence, createUser, occurrenceAction, signIn } from '../support/api'
@@ -8,7 +8,7 @@ const START = { latitude: -25.4284, longitude: -49.2733 }
 const MATERIAL = { latitude: -25.4248, longitude: -49.2733 }
 
 test.describe('Caminho até o material', () => {
-  test('o coletor vê as bolinhas, o come-come e os atalhos para o GPS', async ({
+  test('o coletor vê as bolinhas, o próprio avatar e os atalhos para o GPS', async ({
     page,
     context,
     request,
@@ -17,6 +17,10 @@ test.describe('Caminho até o material', () => {
     const collector = await createUser(request)
     const { id } = await createOccurrence(request, owner, { location: MATERIAL })
     await occurrenceAction(request, collector, id, 'claim')
+    await request.put('/api/me/avatar', {
+      headers: { Authorization: `Bearer ${collector.token}` },
+      data: { preset: 'garrafa' },
+    })
     await context.setGeolocation(START)
     await signIn(page, collector)
 
@@ -24,8 +28,10 @@ test.describe('Caminho até o material', () => {
     const route = page.getByRole('region', { name: 'Caminho até o material' })
     await expect(route).toBeVisible()
 
-    // Come-come na posição do coletor e bolinhas pelo caminho (espaçadas conforme o zoom)
-    await expect(route.getByRole('img', { name: 'Você' })).toBeVisible()
+    // Avatar na posição do coletor e bolinhas pelo caminho (espaçadas conforme o zoom)
+    const me = route.getByRole('img', { name: 'Você' })
+    await expect(me).toBeVisible()
+    await expect(me.locator('img')).toHaveAttribute('src', /\/avatar/)
     const dots = route.locator('path.route-dot')
     await expect.poll(() => dots.count()).toBeGreaterThanOrEqual(5)
     const before = await dots.count()

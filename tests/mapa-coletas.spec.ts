@@ -1,4 +1,4 @@
-// Aba Mapa com coletas em andamento: rota com o come-come, troca entre coletas e
+// Aba Mapa com coletas em andamento: rota com o avatar do coletor, troca entre coletas e
 // limite de 3 coletas ao mesmo tempo
 import { expect, test, type Page } from '@playwright/test'
 import { createOccurrence, createUser, occurrenceAction, signIn } from '../support/api'
@@ -22,7 +22,7 @@ test.describe('Mapa com coletas em andamento', () => {
     await expect(page.locator('path.route-dot')).toHaveCount(0)
   })
 
-  test('com uma coleta: aviso, come-come e bolinhas até o material', async ({
+  test('com uma coleta: aviso, avatar do coletor e bolinhas até o material', async ({
     page,
     context,
     request,
@@ -42,7 +42,7 @@ test.describe('Mapa com coletas em andamento', () => {
     await expect.poll(() => page.locator('path.route-dot').count()).toBeGreaterThan(0)
   })
 
-  test('com duas coletas: escolher para qual o come-come vai', async ({
+  test('com duas coletas: escolher para qual coleta mostrar o caminho', async ({
     page,
     context,
     request,
