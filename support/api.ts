@@ -101,7 +101,7 @@ export function occurrenceAction(
   request: APIRequestContext,
   user: TestUser,
   id: string,
-  action: 'claim' | 'complete' | 'cancel',
+  action: 'claim' | 'complete' | 'cancel' | 'give-up',
 ) {
   return request.post(`/api/occurrences/${id}/${action}`, { headers: auth(user), data: {} })
 }

@@ -56,6 +56,9 @@ npm run report             # relatório HTML da última execução
 | `rota.spec.ts`              | caminho do coletor: bolinhas, avatar do coletor, links do Google Maps/Waze, bolinhas "comidas" ao andar (geolocalização simulada), chegada, visível só para o coletor                  |
 | `mapa-coletas.spec.ts`      | aba Mapa com coletas em andamento: aviso, avatar do coletor, troca entre coletas (lembrada após recarregar), limite de 3 coletas simultâneas                                           |
 | `fotos.spec.ts`             | foto ao informar e ao finalizar a coleta, miniatura em Coletar, fotos no Histórico dos dois, remover antes de publicar                                                                 |
+| `desistir.spec.ts`          | coletor desiste (volta ao mapa, histórico "Você desistiu"), aviso de quando o dono poderá liberar                                                                                      |
+| `esqueci-senha.spec.ts`     | código por e-mail, tentativa errada, senha nova e entrada no app, e-mail sem conta                                                                                                     |
+| `notificacoes.spec.ts`      | sininho com número de não lidas, lista de avisos, marcar como vistas, abrir o histórico, aviso de cancelamento                                                                         |
 
 ## Problemas encontrados pelos testes
 
