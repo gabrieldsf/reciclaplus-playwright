@@ -40,18 +40,19 @@ npm run report             # relatório HTML da última execução
 
 ## O que é testado
 
-| Arquivo                    | Cobre                                                                                                                                                                                  |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `autenticacao.spec.ts`     | CT01 cadastro (pessoa/empresa) e novo login, CT02 e-mail duplicado, CT03 login inválido, validação de campos, rota protegida                                                           |
-| `fluxo-principal.spec.ts`  | **Fluxo da seção 13.2** com dois usuários: login → mapa → criar (CT04–CT06) → marcador → outro usuário assume (CT07) → finaliza (CT10) → status Coletado → linha do tempo → históricos |
-| `regras-de-coleta.spec.ts` | CT08 dois usuários clicam ao mesmo tempo, CT09 própria ocorrência, CT11 outro usuário não finaliza, CT12 já coletada, cancelamento durante a coleta, visitante → login → volta         |
-| `mapa-e-filtros.spec.ts`   | filtro por categoria (barra lateral / botão Filtrar), só disponíveis no mapa, distância pela geolocalização                                                                            |
-| `responsividade.spec.ts`   | sem rolagem horizontal em 9 telas, navegação inferior × superior, alvos de toque ≥ 44px                                                                                                |
-| `acessibilidade.spec.ts`   | axe-core (WCAG 2.1 A/AA) em todas as telas, inclusive formulário com erros                                                                                                             |
-| `painel.spec.ts`           | números da tela = resposta da API, tabela equivalente a cada gráfico, dica via teclado                                                                                                 |
-| `falhas.spec.ts`           | API fora do ar (mapa, login), erro 500, ocorrência inexistente, sessão inválida                                                                                                        |
-| `coletar.spec.ts`          | tela Coletar: ordenação por distância, só disponíveis, coletar pela lista, própria ocorrência, visitante, conflito, /lista → /coletar                                                  |
-| `perfil.spec.ts`           | avatar de reciclagem, envio de foto (redimensionada no navegador), remover, arquivo inválido, sugestão de e-mail no cadastro                                                           |
+| Arquivo                     | Cobre                                                                                                                                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `autenticacao.spec.ts`      | CT01 cadastro (pessoa/empresa) e novo login, CT02 e-mail duplicado, CT03 login inválido, validação de campos, rota protegida                                                           |
+| `fluxo-principal.spec.ts`   | **Fluxo da seção 13.2** com dois usuários: login → mapa → criar (CT04–CT06) → marcador → outro usuário assume (CT07) → finaliza (CT10) → status Coletado → linha do tempo → históricos |
+| `regras-de-coleta.spec.ts`  | CT08 dois usuários clicam ao mesmo tempo, CT09 própria ocorrência, CT11 outro usuário não finaliza, CT12 já coletada, cancelamento durante a coleta, visitante → login → volta         |
+| `mapa-e-filtros.spec.ts`    | filtro por categoria (barra lateral / botão Filtrar), só disponíveis no mapa, distância pela geolocalização                                                                            |
+| `responsividade.spec.ts`    | sem rolagem horizontal em 9 telas, navegação inferior × superior, alvos de toque ≥ 44px                                                                                                |
+| `acessibilidade.spec.ts`    | axe-core (WCAG 2.1 A/AA) em todas as telas, inclusive formulário com erros                                                                                                             |
+| `painel.spec.ts`            | números da tela = resposta da API, tabela equivalente a cada gráfico, dica via teclado                                                                                                 |
+| `falhas.spec.ts`            | API fora do ar (mapa, login), erro 500, ocorrência inexistente, sessão inválida                                                                                                        |
+| `coletar.spec.ts`           | tela Coletar: ordenação por distância, só disponíveis, coletar pela lista, própria ocorrência, visitante, conflito, /lista → /coletar                                                  |
+| `perfil.spec.ts`            | avatar de reciclagem, envio de foto (redimensionada no navegador), remover, arquivo inválido, sugestão de e-mail no cadastro                                                           |
+| `confirmacao-email.spec.ts` | código de confirmação: aviso, Informar/Coletar bloqueados, confirmar e voltar, código errado, campo numérico, reenvio, confirmar depois                                                |
 
 ## Problemas encontrados pelos testes
 

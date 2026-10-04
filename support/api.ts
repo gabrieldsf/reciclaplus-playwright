@@ -12,9 +12,23 @@ export function uniqueId() {
   return `${Date.now().toString(36)}${process.pid.toString(36)}${counter}`
 }
 
+// Código de 6 dígitos do último e-mail "enviado" para o endereço (caixa de saída simulada)
+export async function lastCodeSentTo(request: APIRequestContext, email: string) {
+  const res = await request.get(`/api/dev/outbox?to=${encodeURIComponent(email)}`)
+  if (!res.ok()) throw new Error(`Nenhum e-mail para ${email}`)
+  const { email: sent } = await res.json()
+  return (sent.text as string).match(/\b(\d{6})\b/)![1]!
+}
+
+// Cadastra um usuário. Por padrão já confirma o e-mail (digitando o código recebido,
+// pela API), para os testes que não tratam da confirmação poderem informar e coletar.
 export async function createUser(
   request: APIRequestContext,
-  { name = 'Pessoa Teste', userType = 'PERSON' }: { name?: string; userType?: string } = {},
+  {
+    name = 'Pessoa Teste',
+    userType = 'PERSON',
+    verified = true,
+  }: { name?: string; userType?: string; verified?: boolean } = {},
 ): Promise<TestUser> {
   const id = uniqueId()
   const email = `e2e.${id}@teste.com`
@@ -24,7 +38,16 @@ export async function createUser(
   })
   if (!res.ok()) throw new Error(`Cadastro falhou: ${res.status()} ${await res.text()}`)
   const body = await res.json()
-  return { id: body.user.id, name: body.user.name, email, password, token: body.token }
+  const user = { id: body.user.id, name: body.user.name, email, password, token: body.token }
+
+  if (verified) {
+    const verify = await request.post('/api/auth/verify-email', {
+      headers: auth(user),
+      data: { code: await lastCodeSentTo(request, email) },
+    })
+    if (!verify.ok()) throw new Error(`Confirmação falhou: ${verify.status()}`)
+  }
+  return user
 }
 
 // Entra sem passar pela tela de login (usado quando o login não é o foco do teste)

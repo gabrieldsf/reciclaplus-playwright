@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test'
-import { createUser, uniqueId } from '../support/api'
+import { createUser, lastCodeSentTo, uniqueId } from '../support/api'
 
 test.describe('Autenticação', () => {
-  test('CT01 — cadastro válido cria a conta, entra e permite autenticar de novo', async ({
+  test('CT01 — cadastro válido cria a conta, confirma o e-mail e permite autenticar de novo', async ({
     page,
+    request,
   }) => {
     const email = `e2e.${uniqueId()}@teste.com`
 
@@ -13,6 +14,12 @@ test.describe('Autenticação', () => {
     await page.getByLabel('E-mail').fill(email)
     await page.getByLabel(/Senha/).fill('senha-segura-123')
     await page.getByRole('button', { name: 'Criar conta' }).click()
+
+    // Confirmação do e-mail com o código "recebido"
+    await expect(page).toHaveURL(/\/confirmar-email$/)
+    await expect(page.getByText(email)).toBeVisible()
+    await page.getByLabel('Código').fill(await lastCodeSentTo(request, email))
+    await page.getByRole('button', { name: 'Confirmar' }).click()
 
     await expect(page).toHaveURL(/\/mapa$/)
     await page.getByRole('banner').getByRole('link', { name: 'Perfil' }).click()

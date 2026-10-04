@@ -95,6 +95,8 @@ export default async function globalSetup() {
     JWT_SECRET: 'e2e-secret',
     // Os e-mails dos testes são fictícios; a checagem de DNS tem testes próprios na API
     EMAIL_DOMAIN_CHECK: 'off',
+    // E-mails vão para uma caixa de saída em memória, lida pelos testes em /api/dev/outbox
+    EMAIL_TRANSPORT: 'memory',
     PORT: String(API_PORT),
     CORS_ORIGIN: BASE_URL,
     API_URL: `http://localhost:${API_PORT}`,
