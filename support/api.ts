@@ -49,7 +49,16 @@ export async function createOccurrence(
   {
     category = 'Plástico',
     quantity = `${uniqueId()} kg`,
-  }: { category?: string; quantity?: string } = {},
+    // Sem local explícito: um ponto aleatório a até ~500 m do aparelho simulado (Curitiba)
+    location = {
+      latitude: -25.4284 + (Math.random() - 0.5) / 100,
+      longitude: -49.2733 + (Math.random() - 0.5) / 100,
+    },
+  }: {
+    category?: string
+    quantity?: string
+    location?: { latitude: number; longitude: number }
+  } = {},
 ) {
   const res = await request.post('/api/occurrences', {
     headers: auth(owner),
@@ -57,8 +66,7 @@ export async function createOccurrence(
       categoryId: await categoryId(request, category),
       estimatedQuantity: quantity,
       description: 'Criada pelo teste E2E',
-      latitude: -25.4284 + (Math.random() - 0.5) / 100,
-      longitude: -49.2733 + (Math.random() - 0.5) / 100,
+      ...location,
     },
   })
   if (!res.ok()) throw new Error(`Criar ocorrência falhou: ${res.status()} ${await res.text()}`)

@@ -13,6 +13,7 @@ test.describe('Responsividade', () => {
       '/cadastro',
       '/mapa',
       '/painel',
+      '/lista',
       '/informar',
       '/historico',
       '/perfil',
@@ -53,11 +54,17 @@ test.describe('Responsividade', () => {
       await expect(header).toBeVisible()
       await expect(bottomBar).toBeHidden()
     }
-    for (const name of ['Mapa', 'Painel', 'Informar', 'Histórico', 'Perfil']) {
-      await expect(
-        page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link', { name }),
-      ).toBeVisible()
-    }
+    // Ordem: "Lista" logo ao lado de "Informar"
+    await expect(
+      page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link'),
+    ).toHaveText([/Mapa/, /Painel/, /Informar/, /Lista/, /Histórico/])
+
+    // Perfil fica no canto superior direito, em qualquer tamanho de tela
+    const profile = page.getByRole('banner').getByRole('link', { name: 'Perfil' })
+    await expect(profile).toBeVisible()
+    const box = await profile.boundingBox()
+    expect(box!.y).toBeLessThan(80)
+    expect(box!.x + box!.width).toBeGreaterThan(page.viewportSize()!.width - 80)
   })
 
   test('alvos de toque da barra inferior têm ao menos 44px de altura', async ({

@@ -21,7 +21,7 @@ async function seriousViolations(page: Page) {
 }
 
 test.describe('Acessibilidade (axe)', () => {
-  for (const path of ['/', '/entrar', '/cadastro', '/mapa', '/painel']) {
+  for (const path of ['/', '/entrar', '/cadastro', '/mapa', '/painel', '/lista']) {
     test(`página pública ${path}`, async ({ page }) => {
       await page.goto(path)
       await page.waitForLoadState('networkidle')

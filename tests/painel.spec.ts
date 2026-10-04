@@ -47,7 +47,7 @@ test.describe('Painel de impacto', () => {
 
     const byCategory = page.getByRole('region', { name: 'Ocorrências por categoria' })
     await byCategory.getByRole('button', { name: 'Ver tabela' }).click()
-    await expect(byCategory.getByRole('row')).toHaveCount(7) // cabeçalho + 6 categorias
+    await expect(byCategory.getByRole('row')).toHaveCount(8) // cabeçalho + 7 categorias
   })
 
   test('dica aparece ao focar uma barra pelo teclado', async ({ page, isMobile }) => {

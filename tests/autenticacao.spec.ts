@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test'
 import { createUser, uniqueId } from '../support/api'
-import { navLink } from '../support/ui'
 
 test.describe('Autenticação', () => {
   test('CT01 — cadastro válido cria a conta, entra e permite autenticar de novo', async ({
@@ -16,7 +15,7 @@ test.describe('Autenticação', () => {
     await page.getByRole('button', { name: 'Criar conta' }).click()
 
     await expect(page).toHaveURL(/\/mapa$/)
-    await navLink(page, 'Perfil').click()
+    await page.getByRole('banner').getByRole('link', { name: 'Perfil' }).click()
     await expect(page.getByText('Cooperativa Verde')).toBeVisible()
     await expect(page.getByText('Empresa', { exact: true })).toBeVisible()
 
