@@ -53,6 +53,7 @@ npm run report             # relatório HTML da última execução
 | `coletar.spec.ts`           | tela Coletar: ordenação por distância, só disponíveis, coletar pela lista, própria ocorrência, visitante, conflito, /lista → /coletar                                                  |
 | `perfil.spec.ts`            | avatar de reciclagem, envio de foto (redimensionada no navegador), remover, arquivo inválido, sugestão de e-mail no cadastro                                                           |
 | `confirmacao-email.spec.ts` | código de confirmação: aviso, Informar/Coletar bloqueados, confirmar e voltar, código errado, campo numérico, reenvio, confirmar depois                                                |
+| `rota.spec.ts`              | caminho do coletor: bolinhas, come-come, links do Google Maps/Waze, bolinhas "comidas" ao andar (geolocalização simulada), chegada, visível só para o coletor                          |
 
 ## Problemas encontrados pelos testes
 
