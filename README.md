@@ -54,6 +54,7 @@ npm run report             # relatório HTML da última execução
 | `perfil.spec.ts`            | avatar de reciclagem, envio de foto (redimensionada no navegador), remover, arquivo inválido, sugestão de e-mail no cadastro                                                           |
 | `confirmacao-email.spec.ts` | código de confirmação: aviso, Informar/Coletar bloqueados, confirmar e voltar, código errado, campo numérico, reenvio, confirmar depois                                                |
 | `rota.spec.ts`              | caminho do coletor: bolinhas, come-come, links do Google Maps/Waze, bolinhas "comidas" ao andar (geolocalização simulada), chegada, visível só para o coletor                          |
+| `mapa-coletas.spec.ts`      | aba Mapa com coletas em andamento: aviso, come-come, troca entre coletas (lembrada após recarregar), limite de 3 coletas simultâneas                                                   |
 
 ## Problemas encontrados pelos testes
 

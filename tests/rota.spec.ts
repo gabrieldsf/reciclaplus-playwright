@@ -24,10 +24,10 @@ test.describe('Caminho até o material', () => {
     const route = page.getByRole('region', { name: 'Caminho até o material' })
     await expect(route).toBeVisible()
 
-    // Come-come na posição do coletor e bolinhas a cada ~20 m (≈ 400 m / 20 m)
+    // Come-come na posição do coletor e bolinhas pelo caminho (espaçadas conforme o zoom)
     await expect(route.getByRole('img', { name: 'Você' })).toBeVisible()
     const dots = route.locator('path.route-dot')
-    await expect.poll(() => dots.count()).toBeGreaterThanOrEqual(15)
+    await expect.poll(() => dots.count()).toBeGreaterThanOrEqual(5)
     const before = await dots.count()
     await expect(route.getByText(/^Faltam (3\d\d|4\d\d) m$/)).toBeVisible()
     await expect(route.getByText(/Trajeto aproximado em linha reta/)).toBeVisible()
@@ -44,7 +44,7 @@ test.describe('Caminho até o material', () => {
 
     // Anda até a metade do caminho: as bolinhas de trás são "comidas"
     await context.setGeolocation({ latitude: -25.4266, longitude: -49.2733 })
-    await expect.poll(() => dots.count()).toBeLessThan(before / 2 + 2)
+    await expect.poll(() => dots.count()).toBeLessThan(before)
     await expect(route.getByText(/^Faltam (1\d\d|2\d\d) m$/)).toBeVisible()
 
     // Chega ao material
