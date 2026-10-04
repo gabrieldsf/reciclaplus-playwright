@@ -81,3 +81,25 @@ test.describe('Responsividade', () => {
     }
   })
 })
+
+test('o botão ➕ Informar não fica escondido atrás do mapa', async ({ page, isMobile }) => {
+  test.skip(!isMobile, 'o botão elevado só existe no celular')
+  await page.goto('/mapa')
+  await page.locator('.leaflet-container').waitFor()
+
+  const informar = page
+    .getByRole('navigation', { name: 'Navegação principal' })
+    .getByRole('link', { name: 'Informar' })
+  // O círculo "sobe" acima da barra; testa um ponto na parte de cima dele
+  const circle = informar.locator('span').first()
+  const box = (await circle.boundingBox())!
+  const covered = await page.evaluate(
+    ({ x, y }) => {
+      const hit = document.elementFromPoint(x, y)
+      return !hit?.closest('a[href="/informar"]')
+    },
+    { x: box.x + box.width / 2, y: box.y + 6 },
+  )
+
+  expect(covered, 'algo está desenhado por cima do botão ➕').toBe(false)
+})
